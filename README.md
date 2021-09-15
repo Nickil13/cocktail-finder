@@ -10,8 +10,9 @@ I created this app for whenever I might need to look up a cocktail to see what i
 
 ## Technologies Used
 - HTML
-- Tailwind CSS
 - React JS
+- Tailwind CSS
+
 
 ## My process
 I started by setting up a basic search using the API and using react router to inspect cocktails individually. Then I added a separate page for summer drinks.
