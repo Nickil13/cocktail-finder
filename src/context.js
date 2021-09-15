@@ -5,6 +5,7 @@ const AppContext = React.createContext();
 const searchCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 const searchIngredientUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
 const ingredientUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=";
+
 export const AppProvider = ({children}) => {
     const[cocktails,setCocktails] = useState([]);
     const[summerDrinks,setSummerDrinks] = useState([]);
@@ -12,8 +13,23 @@ export const AppProvider = ({children}) => {
     const[loading,setLoading] = useState(false);
     const[isModalShowing,setIsModalShowing] = useState(false);
     const[inspectedIngredient,setInspectedIngredient] = useState(null);
-    const[darkMode,setDarkMode] = useState(false);
+    const[theme,setTheme] = useState('light');
     
+    useEffect(()=>{
+        if(localStorage.getItem('theme')){
+            setTheme(localStorage.getItem('theme'));
+        }
+    },[])
+
+    const toggleTheme = () =>{
+        if(theme==='light'){
+            setTheme('dark');
+            localStorage.setItem('theme', 'dark');
+        }else if(theme==='dark'){
+            setTheme('light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
     const showModal = (ingredientName) => {
         //Show the Modal
         setIsModalShowing(true);
@@ -204,8 +220,8 @@ export const AppProvider = ({children}) => {
         showModal,
         closeModal,
         inspectedIngredient,
-        darkMode,
-        setDarkMode
+        theme,
+        toggleTheme
     }}>
         {children}
     </AppContext.Provider>

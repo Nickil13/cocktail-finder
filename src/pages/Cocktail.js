@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import CocktailProfile from '../components/CocktailProfile';
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
@@ -49,7 +48,6 @@ export default function Cocktail() {
     }
     return (
         <div>
-             <Navbar/>
              {currentCocktail==null ?
              <h1 className="text-center text-2xl p-10">No cocktail found</h1> : 
              <CocktailProfile cocktail = {currentCocktail}/>

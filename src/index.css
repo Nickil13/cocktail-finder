@@ -26,10 +26,10 @@
 }
 
 .btn{
-    @apply p-2 m-2 rounded bg-indigo-500 text-white shadow-md hover:bg-indigo-600 cursor-pointer;
+    @apply p-2 m-2 rounded bg-indigo-500 text-white shadow-md hover:bg-indigo-600 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-indigo-100;
 }
 .btn-active{
-    @apply bg-indigo-600;
+    @apply bg-indigo-600 dark:bg-indigo-600;
 }
 .btn-drink{
     @apply bg-pink-400 hover:bg-pink-500;

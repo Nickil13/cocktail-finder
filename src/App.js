@@ -3,17 +3,21 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Search from './pages/Search';
 import Cocktail from './pages/Cocktail';
 import SummerDrinks from './pages/SummerDrinks';
+import Navbar from './components/Navbar';
 
 
 function App() {
 
   return(
     <Router>
-      <Switch>
-        <Route exact path ="/"><Search/></Route>
-        <Route path="/cocktail/:id"><Cocktail/></Route>
-        <Route path="/summerDrinks"><SummerDrinks/></Route>
-      </Switch>
+      <Navbar/>
+      <main className="my-0 mx-auto text-center h-full pt-10 dark:bg-gray-800">
+        <Switch>
+          <Route exact path ="/"><Search/></Route>
+          <Route path="/cocktail/:id"><Cocktail/></Route>
+          <Route path="/summerDrinks"><SummerDrinks/></Route>
+        </Switch>
+      </main>
     </Router>
   );
  

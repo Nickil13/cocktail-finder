@@ -5,12 +5,12 @@ export default function SummerSection({drinks,category}) {
     const{name,id,img,description} = category;
     
     return (
-        <article className="grid md:grid-cols-2 items-center place-center w-full max-w-48 max-w-6xl mx-auto my-0 p-10" id={id}>
-            <div className="grid place-items-center max-w-lgp-4 p-4 w-full md:w-80 md:h-96 overflow-hidden">
-                <img className="w-100" src={img} alt={name} />
+        <article className="grid md:grid-cols-2 w-full max-w-48 max-w-6xl mx-auto my-0 p-10" id={id}>
+            <div className="self-center md:p-5 md:h-100">
+                <img className="w-full h-80  object-cover" src={img} alt={name} />
             </div>
             <h2 className="text-center capitalize p-4 bg-indigo-300 md:col-span-2 md:row-start-1">{name}</h2>
-            <div>
+            <div className="p-5">
                 <p className="text-gray-600 p-4 col-start-2">{description}</p>
                 {drinks ?
                 <div className="p-4 col-start-2">

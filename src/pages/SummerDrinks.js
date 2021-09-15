@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import Loading from '../components/Loading';
 import SummerSection from '../components/SummerSection';
 import {drinkData as categories}  from '../drinkData';
@@ -10,6 +9,16 @@ export default function SummerDrinks() {
     const{summerDrinks,loading} = useGlobalContext();
 
 
+    const handleLinkScroll = (e) => {
+        e.preventDefault();
+        const target = e.target.getAttribute("href");
+        const location = document.querySelector(target).offsetTop;
+        const navHeight = document.getElementById("nav-container").getBoundingClientRect().height;
+        window.scrollTo({
+            left:0,
+            top: location-navHeight
+        })
+    }
     const getDrinkList = (name) =>{
         const item = summerDrinks.filter((drink)=>drink.category === name);
         console.log(summerDrinks.length);
@@ -25,15 +34,14 @@ export default function SummerDrinks() {
     }
     return (
         <div>
-            <Navbar/>
-            <main className="my-0 mx-auto text-center h-auto">
+            
                 <div className="bg-summer-background hero">
                     <h1 className="text-white mb-4">Summer Drinks</h1>
                     <p className="p-2 text-xl text-white">These drinks are perfect for a warm summer day!</p>
                     <ul className="flex flex-wrap justify-center">
                         {categories.map((category,index)=>{
                             return(
-                                <li key={index} className="btn btn-drink capitalize"><a href={`#${category.id}`}>{category.name}</a></li>
+                                <li key={index} className="btn btn-drink capitalize" onClick={handleLinkScroll}><a href={`#${category.id}`}>{category.name}</a></li>
                             )
                         })}
                     </ul>
@@ -48,7 +56,7 @@ export default function SummerDrinks() {
                         )
                     })}
                 </div>
-            </main>
+            
         </div>
     )
 }
