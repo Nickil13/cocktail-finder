@@ -1,5 +1,4 @@
 import React, {useState, useEffect,useContext} from'react';
-import {drinkData as categories}  from './drinkData';
 
 const AppContext = React.createContext();
 const searchCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -8,13 +7,16 @@ const ingredientUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=
 
 export const AppProvider = ({children}) => {
     const[cocktails,setCocktails] = useState([]);
-    const[summerDrinks,setSummerDrinks] = useState([]);
-    // const[searchValue,setSearchValue] = useState("");
     const[loading,setLoading] = useState(false);
     const[isModalShowing,setIsModalShowing] = useState(false);
-    const[inspectedIngredient,setInspectedIngredient] = useState(null);
+    const[inspectedIngredient,setInspectedIngredient] = useState({});
     const[theme,setTheme] = useState('light');
     
+    //Get the default list of cocktails.
+    useEffect(()=>{
+        fetchCocktailsByName('');
+    },[])
+
     useEffect(()=>{
         if(localStorage.getItem('theme')){
             setTheme(localStorage.getItem('theme'));
@@ -33,12 +35,14 @@ export const AppProvider = ({children}) => {
     const showModal = (ingredientName) => {
         //Show the Modal
         setIsModalShowing(true);
-        //Fetch ingredient information & set Modal text
+        //Fetch ingredient information and set inspected ingredient
         fetchIngredient(ingredientName);
     }
     const closeModal = () =>{
         setIsModalShowing(false);
     }
+
+    // Fetch methods
     const fetchIngredient = async (ingredientName) =>{
         setLoading(true);
         try{
@@ -59,56 +63,6 @@ export const AppProvider = ({children}) => {
             throw new Error(`Error fetching ingredient for ${ingredientName}`);
         }
     }
-    // useEffect(()=>{
-    //     if(searchType=="ingredient"){
-    //         fetchCocktailsByIngredient();
-    //     }else{
-    //         fetchCocktailsByName();
-    //     }
-        
-    // },[searchValue])
-    const search = (type,searchValue) =>{
-        if(type=="ingredient"){
-            fetchCocktailsByIngredient(searchValue);
-        }else{
-            fetchCocktailsByName(searchValue);
-        }
-        console.log("searching for the " + type +" :" +searchValue);
-    }
-    useEffect(()=>{
-        fetchCocktailsByName("");
-    },[])
-    
-    useEffect(()=>{
-        categories.forEach((category)=>{
-            getSummerDrinks(category.name);
-        })
-    },[])
-    const getSummerDrinks = async (name) =>{
-        setLoading(true);
-        try{
-            const response = await fetch(`${searchCocktailUrl}${name}`);
-            const data = await response.json();
-            const {drinks} = data;
-            let newDrinks = [];
-            if(drinks){
-                newDrinks = drinks.map((drink)=>{
-                    const{idDrink: id, strDrink: name, strDrinkThumb: img} = drink;
-                    return(
-                        {id,name,img}
-                    );
-                })
-                let newCategory = {category: name, drinks:newDrinks};
-                 setSummerDrinks((summerDrinks)=>{
-                     return [...summerDrinks,newCategory];
-                    });       
-            }
-            setLoading(false);
-        }catch(error){
-            setLoading(false);
-            console.log(error);
-        }
-    };
     const fetchCocktailsByIngredient = async (searchValue) =>{
         let ingredient = null;
         setLoading(true);
@@ -179,11 +133,20 @@ export const AppProvider = ({children}) => {
         }catch (error){
             console.log(error);
             setLoading(false);
-            throw new Error("Failed to fetch cocktails by search");
+            throw new Error("Failed to fetch cocktails by name.");
             
         }
         
     }
+    
+    const search = (type,searchValue) =>{
+        if(type=="ingredient"){
+            fetchCocktailsByIngredient(searchValue);
+        }else{
+            fetchCocktailsByName(searchValue);
+        }
+    }
+    
     const getIngredients = (cocktail) =>{
         let ingredients = [];
         let name = cocktail["strIngredient1"];
@@ -213,7 +176,6 @@ export const AppProvider = ({children}) => {
     value={{
         cocktails,
         search,
-        summerDrinks,
         loading,
         getIngredients,
         isModalShowing,

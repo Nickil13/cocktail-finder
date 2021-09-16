@@ -3,7 +3,7 @@ export const drinkData = [
         name: "margarita",
         id: "margarita",
         img: "/images/margarita.jpg",
-        description: "Nothing is better than relaxing at the beach with a margarita! Tequila, lime, rum and a rim of salt."
+        description: "Nothing is better than relaxing at the beach with a margarita! Tequila, lime, liqueur and a rim of salt."
     },
     {
         name: "mojito",

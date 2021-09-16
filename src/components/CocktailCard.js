@@ -10,11 +10,11 @@ export default function CocktailCard({cocktail}) {
     }
 
     return (
-        <div className="grid grid-rows-2 grid-cols-2 justify-center w-4/5 max-w-xl shadow-md my-2 mx-auto cursor-pointer dark:bg-gray-600"
+        <div className="grid grid-rows-2 grid-cols-2 max-w-xl shadow-md mx-auto cursor-pointer dark:bg-gray-600 rounded border-4 border-indigo-200"
               onClick={handleClick}
               >
-                <img className="object-contain self-center row-span-2" src={img} alt={name}/>
-                <div className="row-span-2 self-center p-4 mx-2  bg-indigo-300 dark:bg-gray-800 dark:text-indigo-100">
+                <img className="object-cover h-full self-center row-span-2" src={img} alt={name}/>
+                <div className="self-center row-span-2  p-4 h-full bg-indigo-300 dark:bg-gray-800 dark:text-indigo-100">
                   <h3 className="mb-4">{name}</h3>
                   <ul className="text-gray-600 dark:text-indigo-100">
                       {ingredients.map((ingredient,index)=>{

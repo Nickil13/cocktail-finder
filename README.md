@@ -7,6 +7,7 @@ A create-react-app that searches the CocktailDB API for cocktail recipes.
 I created this app for whenever I might need to look up a cocktail to see what it's made with or when I need a recipe. I wanted a dark mode to make the app more versatile for when the user might want to make cocktails in a darker environment.
 
 ## Live site
+- Site deployed with Netlify at: https://my-cocktail-finder.netlify.app/
 
 ## Technologies Used
 - HTML

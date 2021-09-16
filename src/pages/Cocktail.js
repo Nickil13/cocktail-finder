@@ -15,33 +15,34 @@ export default function Cocktail() {
     const {getIngredients,isModalShowing} = useGlobalContext();
     
     useEffect(()=>{
-        fetchCocktail();
-    },[])
-
-    const fetchCocktail = async () => {
-        setLoading(true);
-        try{
-            const response = await fetch(`${url}${id}`);
-            const data = await response.json();
-            const {drinks} = data;
-
-            if(drinks[0]){
-                const {idDrink: id, strDrink: name, strDrinkThumb: img, strInstructions: instructions} = drinks[0];
-                const ingredients = getIngredients(drinks[0]);
-                const newCocktail = {id,name,img,ingredients,instructions};
+        const fetchCocktail = async () => {
+            setLoading(true);
+            try{
+                const response = await fetch(`${url}${id}`);
+                const data = await response.json();
+                const {drinks} = data;
+    
+                if(drinks[0]){
+                    const {idDrink: id, strDrink: name, strDrinkThumb: img, strInstructions: instructions} = drinks[0];
+                    const ingredients = getIngredients(drinks[0]);
+                    const newCocktail = {id,name,img,ingredients,instructions};
+                    
+                    setCurrentCocktail(newCocktail);
+                }else{
+                    setCurrentCocktail(null);
+                }
+                setLoading(false);
+            }catch(error){
+                setLoading(false);
+                console.log(error);
+                throw new Error("Failed to fetch cocktail by ID");
                 
-                setCurrentCocktail(newCocktail);
-            }else{
-                setCurrentCocktail(null);
             }
-            setLoading(false);
-        }catch(error){
-            setLoading(false);
-            console.log(error);
-            throw new Error("Failed to fetch cocktail by ID");
-            
         }
-    }
+        fetchCocktail();
+    },[id, getIngredients])
+
+    
     
     if(loading){
         return <Loading/>
@@ -50,7 +51,7 @@ export default function Cocktail() {
         <div>
              {currentCocktail==null ?
              <h1 className="text-center text-2xl p-10">No cocktail found</h1> : 
-             <CocktailProfile cocktail = {currentCocktail}/>
+             <CocktailProfile {...currentCocktail}/>
              }
              {isModalShowing && <Modal/>}
         </div>
