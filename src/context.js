@@ -58,6 +58,7 @@ export const AppProvider = ({children}) => {
                 setInspectedIngredient(null);
             }
             setLoading(false);
+            setError('');
         }catch(error){
             console.log(error);
             setLoading(false);
@@ -72,11 +73,10 @@ export const AppProvider = ({children}) => {
             const response = await fetch(`${ingredientUrl}${searchValue}`);
             const data = await response.json();
             if(data.ingredients){
-                console.log(data);
                 ingredient = data.ingredients[0];
-                console.log(ingredient);
             }
             setLoading(false);
+            setError('');
         }catch(error){
             setLoading(false);
             setError("No ingredients that match that criteria.");
@@ -101,6 +101,7 @@ export const AppProvider = ({children}) => {
                     setCocktails([]);
                 }
                 setLoading(false);
+                setError('');
             }catch (error){
                 setLoading(false);
                 setError("No drinks with that ingredient.");
@@ -129,6 +130,7 @@ export const AppProvider = ({children}) => {
                 setCocktails([]);
             }
             setLoading(false);
+            setError('');
         }catch (error){
             console.log(error);
             setLoading(false);
