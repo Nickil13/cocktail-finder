@@ -31,7 +31,7 @@ export default function SummerSection({name,id,img,description}) {
             }
         }
         fetchDrinks();
-    },[])
+    },[name])
  
     return (
         <article className="grid md:grid-cols-2 w-full max-w-48 max-w-6xl mx-auto my-0 p-10" id={id}>

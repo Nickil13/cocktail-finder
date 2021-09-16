@@ -12,7 +12,10 @@ module.exports = {
       backgroundImage: theme =>({
         "hero-background": "url(./images/cocktails.jpg)",
         "summer-background": "url(./images/summerCocktails.jpg)",
-      })
+      }),
+      minHeight:{
+        'card': '200px'
+      },
     },
   },
   variants: {

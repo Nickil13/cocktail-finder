@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Loading() {
     return (
-        <div>
-            Loading...
+        <div className="p-5">
+            <p>Loading...</p>
         </div>
     )
 }

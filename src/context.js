@@ -9,6 +9,7 @@ export const AppProvider = ({children}) => {
     const[cocktails,setCocktails] = useState([]);
     const[loading,setLoading] = useState(false);
     const[isModalShowing,setIsModalShowing] = useState(false);
+    const[error,setError] = useState('');
     const[inspectedIngredient,setInspectedIngredient] = useState({});
     const[theme,setTheme] = useState('light');
     
@@ -60,7 +61,7 @@ export const AppProvider = ({children}) => {
         }catch(error){
             console.log(error);
             setLoading(false);
-            throw new Error(`Error fetching ingredient for ${ingredientName}`);
+            setError("No ingredient information found.")
         }
     }
     const fetchCocktailsByIngredient = async (searchValue) =>{
@@ -77,8 +78,8 @@ export const AppProvider = ({children}) => {
             }
             setLoading(false);
         }catch(error){
-            console.log(error);
             setLoading(false);
+            setError("No ingredients that match that criteria.");
         }
         // Use that ingredient to search for drinks
         if(ingredient){
@@ -101,10 +102,8 @@ export const AppProvider = ({children}) => {
                 }
                 setLoading(false);
             }catch (error){
-                console.log(error);
                 setLoading(false);
-                throw new Error("Failed to fetch cocktails by search");
-                
+                setError("No drinks with that ingredient.");
             }
         }else{
             setCocktails([]);
@@ -133,14 +132,13 @@ export const AppProvider = ({children}) => {
         }catch (error){
             console.log(error);
             setLoading(false);
-            throw new Error("Failed to fetch cocktails by name.");
-            
+            setError("No drinks with that name.");  
         }
         
     }
     
     const search = (type,searchValue) =>{
-        if(type=="ingredient"){
+        if(type==="ingredient"){
             fetchCocktailsByIngredient(searchValue);
         }else{
             fetchCocktailsByName(searchValue);
@@ -176,6 +174,7 @@ export const AppProvider = ({children}) => {
     value={{
         cocktails,
         search,
+        error,
         loading,
         getIngredients,
         isModalShowing,

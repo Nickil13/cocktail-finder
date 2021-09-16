@@ -4,7 +4,7 @@ import CocktailCard from '../components/CocktailCard';
 import {useGlobalContext} from "../context";
 
 export default function Search() {
-    const{cocktails,loading,search} = useGlobalContext();
+    const{cocktails,loading,search,error} = useGlobalContext();
     const[searchType,setSearchType] = useState("name");
 
     const handleSubmit = (e) =>{
@@ -29,9 +29,9 @@ export default function Search() {
                 
                 
                 {/* Search Results */}
-                {loading ? <Loading/> : 
-                <div className="grid place-items-center grid-cols-1 gap-5 lg:grid-cols-2 p-10 max-w-7xl mx-auto">
-                    {cocktails.length<1 ? <div>No cocktails found that match that criteria</div> : cocktails.map((cocktail)=>{
+                {loading ? <Loading/> : error ? <p className="p-5">{error}</p> : 
+                <div className="grid place-items-center grid-cols-1 gap-5 lg:grid-cols-2 p-10 w-full max-w-7xl mx-auto">
+                    {cocktails.length<1 ? <p className="col-span-2">No cocktails found that match that criteria</p> : cocktails.map((cocktail)=>{
                         return(
                             <CocktailCard key={cocktail.id}cocktail={cocktail}/>
                         );
