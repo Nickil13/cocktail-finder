@@ -5,9 +5,7 @@ import Cocktail from './pages/Cocktail';
 import SummerDrinks from './pages/SummerDrinks';
 import Navbar from './components/Navbar';
 
-
 function App() {
-
   return(
     <Router>
       <Navbar/>
@@ -17,7 +15,7 @@ function App() {
           <Route path="/cocktail/:id"><Cocktail/></Route>
           <Route path="/summerDrinks"><SummerDrinks/></Route>
         </Switch>
-      </main>
+      </main> 
     </Router>
   );
  

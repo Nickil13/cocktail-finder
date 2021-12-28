@@ -2,11 +2,14 @@ import React from 'react';
 import {useGlobalContext} from '../context';
 
 
-const CocktailProfile = ({name,instructions,ingredients,img}) =>{
+const CocktailProfile = ({name,instructions,ingredients,img,tooltipActive,closeTooltip}) =>{
     const {showModal} = useGlobalContext();
  
     const handleIngredientClick = (name) =>{
         showModal(name);
+        if(tooltipActive){
+            closeTooltip();
+        }
     }
     return(
         <div className="grid justify-items-center mt-20 mx-auto lg:p-10 lg:grid-cols-2 w-full max-w-md md:max-w-lg lg:max-w-6xl">
@@ -26,9 +29,7 @@ const CocktailProfile = ({name,instructions,ingredients,img}) =>{
                     })}
                 </ul>
                 <p className="mt-5 text-gray-600 dark:text-gray-400">{instructions}</p>
-             </div>
-                
-                
+             </div>       
         </div>          
     )
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import Loading from './Loading';
 
 
 const searchCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -36,12 +37,12 @@ export default function SummerSection({name,id,img,description}) {
     return (
         <article className="grid md:grid-cols-2 w-full max-w-48 max-w-6xl mx-auto my-0 p-10" id={id}>
             <div className="self-center md:p-5 md:h-100">
-                <img className="w-full h-80  object-cover" src={img} alt={name} />
+                <img className="w-full h-80 object-cover" src={img} alt={name}/>
             </div>
             <h2 className="text-center capitalize p-4 bg-pink-300 md:col-span-2 md:row-start-1">{name}</h2>
             <div className="p-5">
                 <p className="text-gray-600 p-4 col-start-2">{description}</p>
-                {loading ? <p>Loading recipes</p> : drinks.length>0 ?
+                {loading ? <Loading>Loading recipes</Loading> : drinks.length>0 ?
                 <div className="p-4 col-start-2">
                     <p className="mb-4 uppercase tracking-wider">{`${name} recipes to try:`}</p>
                     <ul className="grid grid-cols-2 text-pink-400">

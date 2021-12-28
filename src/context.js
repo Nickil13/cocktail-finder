@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useContext} from'react';
+import React, {useState, useEffect, useCallback, useContext} from'react';
 
 const AppContext = React.createContext();
 const searchCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -12,17 +12,45 @@ export const AppProvider = ({children}) => {
     const[error,setError] = useState('');
     const[inspectedIngredient,setInspectedIngredient] = useState({});
     const[theme,setTheme] = useState('light');
-    
+
+
     //Get the default list of cocktails.
-    useEffect(()=>{
-        fetchCocktailsByName('');
-    },[])
+    const fetchCocktailsByName =  useCallback( async(searchValue) =>{
+        setLoading(true);
+        try{
+            const response  = await fetch(`${searchCocktailUrl}${searchValue}`);
+            const data = await response.json();
+            const {drinks} = data;
+            if(drinks){
+                const newCocktails = drinks.map((drink)=>{
+                    const {idDrink,strDrink,strDrinkThumb,strInstructions} = drink;
+                    const ingredients = getIngredients(drink);
+                    return(
+                        {id: idDrink, name: strDrink, img: strDrinkThumb, ingredients:ingredients, instructions: strInstructions}
+                    );
+                })
+                setCocktails(newCocktails);
+            }else{
+                setCocktails([]);
+            }
+            setLoading(false);
+            setError('');
+        }catch (error){
+            console.log(error);
+            setLoading(false);
+            setError("No drinks with that name.");  
+        }
+      
+    },[]);
 
     useEffect(()=>{
+        if(cocktails.length<1){
+            fetchCocktailsByName('');
+        }
         if(localStorage.getItem('theme')){
             setTheme(localStorage.getItem('theme'));
         }
-    },[])
+    },[cocktails, fetchCocktailsByName])
 
     const toggleTheme = () =>{
         if(theme==='light'){
@@ -111,33 +139,7 @@ export const AppProvider = ({children}) => {
         }
         
     }
-    const fetchCocktailsByName = async (searchValue) =>{
-        setLoading(true);
-        try{
-            const response  = await fetch(`${searchCocktailUrl}${searchValue}`);
-            const data = await response.json();
-            const {drinks} = data;
-            if(drinks){
-                const newCocktails = drinks.map((drink)=>{
-                    const {idDrink,strDrink,strDrinkThumb,strInstructions} = drink;
-                    const ingredients = getIngredients(drink);
-                    return(
-                        {id: idDrink, name: strDrink, img: strDrinkThumb, ingredients:ingredients, instructions: strInstructions}
-                    );
-                })
-                setCocktails(newCocktails);
-            }else{
-                setCocktails([]);
-            }
-            setLoading(false);
-            setError('');
-        }catch (error){
-            console.log(error);
-            setLoading(false);
-            setError("No drinks with that name.");  
-        }
-        
-    }
+    
     
     const search = (type,searchValue) =>{
         if(type==="ingredient"){

@@ -15,7 +15,7 @@ module.exports = {
       }),
       minHeight:{
         'card': '200px'
-      },
+      }
     },
   },
   variants: {
