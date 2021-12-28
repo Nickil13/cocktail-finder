@@ -22,3 +22,6 @@ I added a modal for looking at the ingredients afterwards and then the dark mode
 ## What I learned
 I learned how to work with multiple API calls and reinforced my knowledge of react router and context. This is also my first project with Tailwind.
 
+## Preview
+![image](https://user-images.githubusercontent.com/36387179/147546455-062dccc9-ac90-4a3e-b3bd-7d960c2e9d10.png)
+
