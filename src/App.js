@@ -9,7 +9,7 @@ function App() {
   return(
     <Router>
       <Navbar/>
-      <main className="my-0 mx-auto min-h-screen text-center pt-10 dark:bg-gray-800">
+      <main className="my-0 mx-auto content-container text-center mt-nav dark:bg-gray-800">
         <Switch>
           <Route exact path ="/"><Search/></Route>
           <Route path="/cocktail/:id"><Cocktail/></Route>

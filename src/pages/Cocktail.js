@@ -65,15 +65,17 @@ export default function Cocktail() {
     }
 
     return (
-        <div>
-            {tooltipActive ? <div className="h-10 p-2 flex fixed top-24 left-0 bg-indigo-500 tooltip transition ease-in-out duration-300">
-                <span className="text-indigo-100">Don't recognize an ingredient? Click it for more info!</span>
-                <VscClose className="ml-5 cursor-pointer text-white" onClick={closeTooltip}/>
-            </div> :
-            <div className="h-10 fixed top-28 left-5 text-indigo-400 text-3xl hover:text-indigo-200 dark:hover:text-indigo-500 cursor-pointer">
-                <MdHelpOutline onClick={openTooltip}/>
-            </div>}
-            <div className="grid place-items-center min-h-screen">
+        <div className="relative">
+            <div className="absolute top-0 left-0 h-10 ">
+                {tooltipActive ? <div className="flex p-2 bg-indigo-500 tooltip transition ease-in-out duration-300">
+                    <span className="text-indigo-100">Don't recognize an ingredient? Click it for more info!</span>
+                    <VscClose className="ml-5 cursor-pointer text-white text-2xl" onClick={closeTooltip}/>
+                </div> :
+                <div className="p-4 text-indigo-400 text-3xl hover:text-indigo-200 dark:hover:text-indigo-500 cursor-pointer">
+                    <MdHelpOutline onClick={openTooltip}/>
+                </div>}
+            </div>
+            <div className="grid place-items-center content-container">
                 {loading ? <Loading/> : currentCocktail==null ?
                 <h2 className="text-center text-4xl p-10 text-indigo-400">No cocktail found</h2> : 
                 <CocktailProfile {...currentCocktail} tooltipActive={tooltipActive} closeTooltip={closeTooltip}/>

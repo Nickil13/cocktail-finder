@@ -24,7 +24,7 @@
 }
 
 .hero{
-    @apply bg-cover bg-left bg-gray-700 bg-blend-overlay p-20 py-40;
+    @apply bg-cover bg-left bg-gray-700 bg-blend-overlay py-28 px-10 h-screen-90 sm:max-h-96;
 }
 
 .btn{
@@ -36,4 +36,8 @@
 }
 .btn-drink{
     @apply bg-pink-400 hover:bg-pink-500 dark:bg-pink-400 dark:text-white dark:hover:bg-pink-500;
+}
+
+.content-container{
+    min-height: calc(100vh - 100px);
 }

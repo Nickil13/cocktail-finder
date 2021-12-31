@@ -8,6 +8,7 @@ module.exports = {
       'serif': ["'Bebas Neue'", ...defaultTheme.fontFamily.serif],
       'sans': ["Montserrat",...defaultTheme.fontFamily.sans],
     },
+
     extend: {
       backgroundImage: theme =>({
         "hero-background": "url(./images/cocktails.jpg)",
@@ -15,7 +16,17 @@ module.exports = {
       }),
       minHeight:{
         'card': '200px'
-      }
+      },
+      height: {
+        'nav': '100px',
+        'screen-90': '90vh'
+      },
+      margin: {
+        'nav': '100px'
+      },
+      screens: {
+        'xsm': '500px'
+      },
     },
   },
   variants: {
