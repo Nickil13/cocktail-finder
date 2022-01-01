@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback, useContext} from'react';
 
 const AppContext = React.createContext();
 const searchCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+const searchCocktailByIdUrl = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 const searchIngredientUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
 const ingredientUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=";
 
@@ -44,13 +45,15 @@ export const AppProvider = ({children}) => {
     },[]);
 
     useEffect(()=>{
-        if(cocktails.length<1){
-            fetchCocktailsByName('');
-        }
+        fetchCocktailsByName('');
+    },[fetchCocktailsByName])
+
+    useEffect(()=>{
         if(localStorage.getItem('theme')){
             setTheme(localStorage.getItem('theme'));
         }
-    },[cocktails, fetchCocktailsByName])
+    },[cocktails])
+    
 
     const toggleTheme = () =>{
         if(theme==='light'){
@@ -93,9 +96,12 @@ export const AppProvider = ({children}) => {
             setError("No ingredient information found.")
         }
     }
+
     const fetchCocktailsByIngredient = async (searchValue) =>{
         let ingredient = null;
+        let drinkList = [];
         setLoading(true);
+
         // Check to see if the ingredient exists
         try{
             const response = await fetch(`${ingredientUrl}${searchValue}`);
@@ -103,13 +109,12 @@ export const AppProvider = ({children}) => {
             if(data.ingredients){
                 ingredient = data.ingredients[0];
             }
-            setLoading(false);
             setError('');
         }catch(error){
             setLoading(false);
             setError("No ingredients that match that criteria.");
         }
-        // Use that ingredient to search for drinks
+        // Use that ingredient to search for drinks. Searching by ingredient gives us a list of names/ids for drinks.
         if(ingredient){
             let fetchUrl = `${searchIngredientUrl}${ingredient.strIngredient}`;
             try{
@@ -117,29 +122,63 @@ export const AppProvider = ({children}) => {
                 const data = await response.json();
                 const {drinks} = data;
                 if(drinks){
-                    const newCocktails = drinks.map((drink)=>{
-                        const {idDrink,strDrink,strDrinkThumb,strInstructions} = drink;
-                        const ingredients = getIngredients(drink);
+                    const drinksByIngredient = drinks.map((drink)=>{
+                        const {idDrink, strDrink} = drink;
                         return(
-                            {id: idDrink, name: strDrink, img: strDrinkThumb, ingredients:ingredients, instructions: strInstructions}
+                            {id: idDrink, name: strDrink}
                         );
                     })
-                    setCocktails(newCocktails);
+                    drinkList = drinksByIngredient;
                 }else{
-                    setCocktails([]);
+                    drinkList = [];
                 }
-                setLoading(false);
                 setError('');
             }catch (error){
                 setLoading(false);
                 setError("No drinks with that ingredient.");
             }
+
+            //Get the drink details for each drink
+            if(drinkList){
+                const d = await fetchCocktailList(drinkList);
+                setCocktails(d);
+                setLoading(false);
+            }
         }else{
             setCocktails([]);
+            setLoading(false);
         }
         
     }
-    
+
+    //Fetch a list of cocktails using a list of API ids
+    const fetchCocktailList = async (drinkList) =>{
+        let newDrinks = [];
+        for(let i=0; i<drinkList.length;i++){
+            let fetchUrl= `${searchCocktailByIdUrl}${drinkList[i].id}`;
+            setLoading(true);
+
+            try{
+                const response = await fetch(fetchUrl);
+                const {drinks} = await response.json();
+
+                const newCocktail = drinks.map((drink)=>{
+                    const {idDrink,strDrink,strDrinkThumb,strInstructions} = drink;
+                    const ingredients = getIngredients(drink);
+                    return(
+                        {id: idDrink, name: strDrink, img: strDrinkThumb, ingredients:ingredients, instructions: strInstructions}
+                    );
+                })
+                newDrinks = [...newDrinks, newCocktail[0]];
+                
+                setError('');
+            }catch(error){
+                setLoading(false);
+                setError("No drink with that ID.");  
+            }
+        }
+        return newDrinks; 
+    }
     
     const search = (type,searchValue) =>{
         if(type==="ingredient"){

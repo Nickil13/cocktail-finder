@@ -33,7 +33,7 @@ export default function Search() {
                 <div className="grid place-items-center grid-cols-1 gap-5 lg:grid-cols-2 p-10 w-full max-w-7xl mx-auto">
                     {cocktails.length<1 ? <p className="col-span-2">No cocktails found that match that criteria</p> : cocktails.map((cocktail)=>{
                         return(
-                            <CocktailCard key={cocktail.id}cocktail={cocktail}/>
+                            <CocktailCard key={cocktail.id} cocktail={cocktail}/>
                         );
                         
                     })}
