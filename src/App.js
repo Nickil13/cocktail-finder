@@ -20,7 +20,7 @@ function App() {
     <Router>
       <ScrollToTop>
         <Navbar/>
-        <main className="my-0 mx-auto content-container text-center mt-nav dark:bg-gray-800">
+        <main className="my-0 mx-auto content-container text-center mt-nav">
           <Switch>
             <Route exact path ="/"><Search/></Route>
             <Route path="/cocktail/:id"><Cocktail/></Route>

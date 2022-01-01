@@ -14,7 +14,7 @@ const CocktailProfile = ({name,instructions,ingredients,img,tooltipActive,closeT
     return(
         <div className="grid justify-items-center mx-auto p-5 lg:p-10 lg:grid-cols-2 w-full max-w-md md:max-w-lg lg:max-w-6xl">
             <img className="rounded" src={img} alt={name} />
-            <div className="p-6 sm:text-lg md:text-xl md:p-10">
+            <div className="p-6 md:p-10">
                 <h2 className="text-center text-indigo-500 mb-5">{name}</h2>
                 <ul className="dark:text-indigo-200">
                     {ingredients.map((ingredient,index)=>{

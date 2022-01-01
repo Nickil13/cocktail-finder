@@ -22,9 +22,9 @@ export default function Navbar() {
     return (
         /*Navbar container*/
         <div id="nav-container" className="fixed flex items-center justify-between w-full z-10 top-0 shadow-md py-4 px-6 h-nav bg-white dark:bg-gray-600">
-            <div className="flex justify-between items-center w-full lg:w-3/5 mx-auto my-0">
+            <div className="flex justify-between items-center w-full lg:w-4/5 max-w-screen-lg mx-auto my-0">
                 <Link to="/"><span className="font-serif text-indigo-500 dark:text-indigo-100 font-medium text-3xl xsm:text-4xl">Cocktail Finder</span></Link>
-                <ul className="flex px-4 md:text-lg">
+                <ul className="flex px-4">
                     <li className="hover:text-indigo-500 dark:text-indigo-100 dark:hover:text-white" onClick={()=>scrollToTop()}><Link to="/">Search</Link></li>
                     <li className="ml-4 hover:text-indigo-500 dark:text-indigo-100 dark:hover:text-white" onClick={()=>scrollToTop()}><Link to="/summerDrinks">Summer Drinks</Link></li>
                 </ul>

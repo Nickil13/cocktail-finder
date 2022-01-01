@@ -18,6 +18,10 @@
     p{
         @apply text-gray-600 dark:text-gray-400;
     }
+
+    body{
+        @apply dark:bg-gray-800;
+    }
     html{
         scroll-behavior: smooth;
     }
